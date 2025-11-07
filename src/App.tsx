@@ -18,7 +18,7 @@ const AppShell = () => {
   const [toast, setToast] = useState<ToastState | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { user, loading: authLoading } = useAuth();
-  const { records, monthlySummary, error, loading } = useEvaluationData();
+  const { latestRecords, allRecords, monthlySummary, error, loading } = useEvaluationData();
 
   const clearToastTimer = useCallback(() => {
     if (toastTimer.current) {
@@ -44,9 +44,9 @@ const AppShell = () => {
   }, [error, showToast]);
 
   const assessorOptions = useMemo(() => {
-    const unique = new Set(records.map((record) => record.assessor));
+    const unique = new Set(allRecords.map((record) => record.assessor));
     return Array.from(unique).sort();
-  }, [records]);
+  }, [allRecords]);
 
   const handleSave = async (payload: EvaluationPayload) => {
     if (!user) return;
@@ -105,7 +105,8 @@ const AppShell = () => {
         <Dashboard
           loading={loading}
           monthlySummary={monthlySummary}
-          records={records}
+          latestRecords={latestRecords}
+          allRecords={allRecords}
         />
       )}
 
