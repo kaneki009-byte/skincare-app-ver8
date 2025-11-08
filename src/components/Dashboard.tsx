@@ -286,8 +286,8 @@ const Dashboard = ({ loading, monthlySummary, latestRecords, allRecords }: Props
       <section className="card wide">
         <h2>詳細表</h2>
         <div className="table-wrapper overflow-x-auto">
-          <table className="min-w-full whitespace-nowrap text-sm">
-            <thead>
+          <table className="min-w-full text-sm">
+            <thead className="whitespace-nowrap">
               <tr>
                 <th>評価日</th>
                 <th>評価者</th>
@@ -297,7 +297,7 @@ const Dashboard = ({ loading, monthlySummary, latestRecords, allRecords }: Props
                 <th>操作</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="whitespace-nowrap">
               {latestRecords.map((record) => {
                 const noteText = record.notes || '（記載なし）';
                 const busy = deletingId === record.id;
