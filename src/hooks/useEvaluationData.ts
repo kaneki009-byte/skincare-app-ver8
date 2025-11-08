@@ -1,8 +1,20 @@
 import { useEffect, useMemo, useState } from 'react';
-import { collection, limit, onSnapshot, orderBy, query, type DocumentData, type QueryDocumentSnapshot } from 'firebase/firestore';
+import {
+  collection,
+  deleteDoc,
+  doc,
+  limit,
+  onSnapshot,
+  orderBy,
+  query,
+  type DocumentData,
+  type QueryDocumentSnapshot
+} from 'firebase/firestore';
 import { db } from '../firebase';
 import type { EvaluationRecord } from '../types/evaluation';
 import { summarizeMonthly } from '../lib/summaries';
+
+export type DeleteEvaluationHandler = (id: string) => Promise<void>;
 
 interface HookResult {
   latestRecords: EvaluationRecord[];
@@ -11,6 +23,12 @@ interface HookResult {
   loading: boolean;
   error: string | null;
 }
+
+export const deleteEvaluationRecord: DeleteEvaluationHandler = async (evaluationId) => {
+  if (!evaluationId) return;
+  const evaluationRef = doc(db, 'evaluations', evaluationId);
+  await deleteDoc(evaluationRef);
+};
 
 const LATEST_EVALUATION_LIMIT = 10;
 
