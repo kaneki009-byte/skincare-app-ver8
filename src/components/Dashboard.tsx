@@ -285,8 +285,8 @@ const Dashboard = ({ loading, monthlySummary, latestRecords, allRecords }: Props
 
       <section className="card wide">
         <h2>詳細表</h2>
-        <div className="table-wrapper">
-          <table>
+        <div className="table-wrapper overflow-x-auto">
+          <table className="min-w-full whitespace-nowrap text-sm">
             <thead>
               <tr>
                 <th>評価日</th>
