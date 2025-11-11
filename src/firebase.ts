@@ -1,5 +1,4 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
 import {
   Timestamp,
   addDoc,
@@ -19,11 +18,10 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
 export const db = getFirestore(app);
 
 interface SavePayload extends EvaluationPayload {
-  createdBy: string;
+  createdBy?: string;
 }
 
 export const saveEvaluation = async (payload: SavePayload) => {
@@ -36,6 +34,6 @@ export const saveEvaluation = async (payload: SavePayload) => {
     notes: payload.notes,
     assessmentDate,
     createdAt: serverTimestamp(),
-    createdBy: payload.createdBy
+    ...(payload.createdBy ? { createdBy: payload.createdBy } : {})
   });
 };
